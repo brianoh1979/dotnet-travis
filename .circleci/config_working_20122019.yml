@@ -13,9 +13,9 @@
      
      steps:
        - checkout
-#       - run: dotnet restore
+       - run: dotnet restore
        - run: dotnet build
-#       - run: dotnet run --project ./Travis/Travis.csproj
+       - run: dotnet run --project ./Travis/Travis.csproj
       
  workflows:
   version: 2
