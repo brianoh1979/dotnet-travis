@@ -11,7 +11,7 @@
      steps:
        - checkout
        - run: conda init powershell
-       - run: conda create --name customerone_builder python=3.7 -y
+       - run: conda create --name brian_builder python=3.7 -y
        - run: 
            name: Initialize conda
            command: conda init powershell
@@ -45,6 +45,7 @@
            command: |
              conda activate customerone_builder
              pip install -r features/requirements.txt
+             conda install -c conda-forge behave
        - run:
            name: Run e2e tests
            no_output_timeout: 1h
