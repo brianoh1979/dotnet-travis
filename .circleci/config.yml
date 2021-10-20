@@ -6,7 +6,6 @@
  jobs:
    build:
      executor: win/default
-     resource_class: "windows.xlarge"
      shell: powershell.exe -ExecutionPolicy Bypass
      
      steps:
