@@ -6,7 +6,6 @@
  jobs:
    build:
      executor: win/default
-     shell: powershell.exe -ExecutionPolicy Bypass
      
      steps:
        - checkout
