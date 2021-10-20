@@ -38,7 +38,6 @@
        - run:
            name: Setup Hadoop binary
            command: |
-           $ProgressPreference = "SilentlyContinue"
            Invoke-WebRequest https://github.com/steveloughran/winutils/raw/master/hadoop-2.6.3/bin/winutils.exe -OutFile winutils.exe
            New-Item -ItemType directory -Path C:\hadoop\bin
            mv .\winutils.exe C:\hadoop\bin
