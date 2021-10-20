@@ -45,13 +45,13 @@
            command: |
              conda activate customerone_builder
              pip install -r features/requirements.txt
-             pip install behave
+             easy_install behave
        - run:
            name: Run e2e tests
            no_output_timeout: 1h
            command: |
              conda activate brian_builder
-             behave features/tutorial.feature 
+             "C:\tools\miniconda3\Scripts\behave" features/tutorial.feature 
 
 
  workflows:
