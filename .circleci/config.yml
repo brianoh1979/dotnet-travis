@@ -40,26 +40,27 @@
              New-Item -ItemType directory -Path C:\hadoop\bin
              mv .\winutils.exe C:\hadoop\bin
              setx /m HADOOP_HOME "C:\hadoop\"      
+       - restore_cache:  # ensure this step occurs *before* installing dependencies
+           key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
        - run:
            name: Install dependencies
            command: |
              conda activate customerone_builder
              pip install -r features/requirements.txt
              easy_install behave
+       - save_cache:
+          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+          paths:
+            - ".venv"
+            - "/usr/local/bin"
+            - "/usr/local/lib/python3.7/site-packages"
        - run: mkdir test-results
        - run:
            name: Run e2e tests
            no_output_timeout: 1h
            command: |
              conda activate brian_builder
-             C:\tools\miniconda3\Scripts\behave --dry-run C:\Users\circleci\project\features\tutorial.feature \
-               | sed -n 's/^  Scenario: \(.*\)#.*$/\1/p' \
-               | awk '{$1=$1};1' > scenarios.txt
-             cat scenarios.txt
-             readarray -t scenarios < <(circleci tests split --split-by=timings scenarios.txt)
-             echo "${scenarios[@]}"
-             tmp=("${scenarios[@]/#/--name \'}")
-             eval "C:\tools\miniconda3\Scripts\behave --junit ${tmp[@]/%/\'} features/tutorial.feature"
+             C:\tools\miniconda3\Scripts\behave C:\Users\circleci\project\features\tutorial.feature 
        - store_test_results:
            path: test-results
 
