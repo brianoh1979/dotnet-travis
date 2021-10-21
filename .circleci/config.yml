@@ -41,7 +41,7 @@
              mv .\winutils.exe C:\hadoop\bin
              setx /m HADOOP_HOME "C:\hadoop\"      
        - restore_cache:  # ensure this step occurs *before* installing dependencies
-           key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+           key: v1-dependencies-{% raw %}{{ checksum "features/requirements.txt" }}{% endraw %}
        - run:
            name: Install dependencies
            command: |
@@ -49,7 +49,7 @@
              pip install -r features/requirements.txt
              easy_install behave
        - save_cache:
-          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
+          key: v1-dependencies-{% raw %}{{ checksum "features/requirements.txt" }}{% endraw %}
           paths:
             - ".venv"
             - "/usr/local/bin"
