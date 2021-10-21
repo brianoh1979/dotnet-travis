@@ -45,7 +45,7 @@
        - run:
            name: Install dependencies
            command: |
-             conda activate customerone_builder
+             conda activate brian_builder
              pip install -r features/requirements.txt
              easy_install behave
        - save_cache:
