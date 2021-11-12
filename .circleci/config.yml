@@ -6,40 +6,18 @@
 
  jobs:
    build:
-     executor: win/default
+     docker: 
+       - image: cimg/python:3.7
      
      steps:
        - checkout
-       - run: conda init powershell
-       - run: conda create --name brian_builder python=3.7 -y
-       - run: 
-           name: Initialize conda
-           command: conda init powershell
-       - run: 
-           name: Create 'brian_builder' conda environment
-           command: conda create --name brian_builder python=3.7 -y
-       - run:
-           name: Install Java 8
-           command: |
-             Invoke-WebRequest https://github.com/AdoptOpenJDK/openjdk8-upstream-binaries/releases/download/jdk8u252-b09/OpenJDK8U-jdk_x64_windows_8u252b09.zip -OutFile OpenJDK8U.zip
-             Expand-Archive .\OpenJDK8U.zip -DestinationPath C:\OpenJDK8U
-       - run:
-           name: Create Inbound rules for Java
-           command: |
-             New-NetFirewallRule -DisplayName "Allow JDK UDP" -Profile "Public" -Protocol "UDP" -Direction Inbound -Program "C:\OpenJDK8U\openjdk-8u252-b09\bin\java.exe" -Action Allow
-             New-NetFirewallRule -DisplayName "Allow JDK TCP" -Profile "Public" -Protocol "TCP" -Direction Inbound -Program "C:\OpenJDK8U\openjdk-8u252-b09\bin\java.exe" -Action Allow
-       - run:
-           name: Set Java environment variables
-           command: |
-             [Environment]::SetEnvironmentVariable("Path", [Environment]::GetEnvironmentVariable('Path', 'Machine') + ";C:\OpenJDK8U\openjdk-8u252-b09\bin", "Machine")
-             setx /m JAVA_HOME "C:\OpenJDK8U\openjdk-8u252-b09"
-       - run:
-           name: Setup Hadoop binary
-           command: |
-             Invoke-WebRequest https://github.com/steveloughran/winutils/raw/master/hadoop-2.6.3/bin/winutils.exe -OutFile winutils.exe
-             New-Item -ItemType directory -Path C:\hadoop\bin
-             mv .\winutils.exe C:\hadoop\bin
-             setx /m HADOOP_HOME "C:\hadoop\"      
+#       - run: conda create --name brian_builder python=3.7 -y
+#       - run: 
+#           name: Initialize conda
+#           command: conda init powershell
+#       - run: 
+#           name: Create 'brian_builder' conda environment
+#           command: conda create --name brian_builder python=3.7 -y
        - restore_cache:  # ensure this step occurs *before* installing dependencies
            key: v1-dependencies-{% raw %}{{ checksum "features/requirements.txt" }}{% endraw %}
        - run:
@@ -55,12 +33,6 @@
             - "/usr/local/bin"
             - "/usr/local/lib/python3.7/site-packages"
        - run: mkdir test-results
-       - run:
-           name: Run e2e tests
-           no_output_timeout: 1h
-           command: |
-             conda activate brian_builder
-             C:\tools\miniconda3\Scripts\behave C:\Users\circleci\project\features\tutorial.feature 
        - store_test_results:
            path: test-results
 
