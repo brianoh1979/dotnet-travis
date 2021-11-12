@@ -19,13 +19,13 @@
 #           name: Create 'brian_builder' conda environment
 #           command: conda create --name brian_builder python=3.7 -y
        - restore_cache:  # ensure this step occurs *before* installing dependencies
-           key: v1-dependencies-{% raw %}{{ checksum "features/requirements.txt" }}{% endraw %}
+           key: v2-dependencies-{{ checksum "features/requirements.txt" }}
        - run:
            name: Install dependencies
            command: |
              pip install -r features/requirements.txt
        - save_cache:
-          key: v1-dependencies-{% raw %}{{ checksum "features/requirements.txt" }}{% endraw %}
+          key: v2-dependencies-{{ checksum "features/requirements.txt" }}
           paths:
             - ".venv"
             - "/usr/local/bin"
