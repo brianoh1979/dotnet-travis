@@ -27,9 +27,7 @@
        - save_cache:
           key: v2-dependencies-{{ checksum "features/requirements.txt" }}
           paths:
-            - ".venv"
-            - "/usr/local/bin"
-            - "/usr/local/lib/python3.7/site-packages"
+            - "venv"
        - run: mkdir test-results
        - store_test_results:
            path: test-results
