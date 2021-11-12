@@ -23,9 +23,7 @@
        - run:
            name: Install dependencies
            command: |
-             conda activate brian_builder
              pip install -r features/requirements.txt
-             easy_install behave
        - save_cache:
           key: v1-dependencies-{% raw %}{{ checksum "features/requirements.txt" }}{% endraw %}
           paths:
