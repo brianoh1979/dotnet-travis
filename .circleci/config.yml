@@ -27,7 +27,7 @@
        - save_cache:
           key: v3-dependencies-{{ checksum "features/requirements.txt" }}
           paths:
-            - "venv"
+            - ".venv"
        - run: mkdir test-results
        - store_test_results:
            path: test-results
