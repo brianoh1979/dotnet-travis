@@ -32,7 +32,7 @@
 #       - run: source env/kedro-environment/bin/activate
        - run: pip install pipenv
        - run: mkdir kedro-environment && cd kedro-environment
-       - run: kedro test --type=unit -n 3
+       - run: python -m kedro test --type=unit -n 3
        - run: mkdir test-results
        - store_test_results:
            path: test-results
