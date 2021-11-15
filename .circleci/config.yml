@@ -3,7 +3,7 @@
 
  jobs:
    build:
-     parallelism: 3
+     parallelism: 2
      docker: 
        - image: continuumio/anaconda3
      
