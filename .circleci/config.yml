@@ -31,7 +31,7 @@
             - ".venv"
 #       - run: source env/kedro-environment/bin/activate
        - run: pip install pipenv jmespath dynaconf cachetools toposort anyconfig kedro
-       - run: mkdir kedro-environment && cd kedro-environment
+       - run: mkdir kedro-environment && cd kedro-environment && kedro new
        - run: kedro test --type=unit -n 3
        - run: mkdir test-results
        - store_test_results:
