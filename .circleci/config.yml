@@ -7,17 +7,17 @@
  jobs:
    build:
      docker: 
-       - image: cimg/python:3.7
+       - image: continuumio/anaconda3
      
      steps:
        - checkout
-#       - run: conda create --name brian_builder python=3.7 -y
-#       - run: 
-#           name: Initialize conda
-#           command: conda init powershell
-#       - run: 
-#           name: Create 'brian_builder' conda environment
-#           command: conda create --name brian_builder python=3.7 -y
+       - run: conda create --name kedro-environment python=3.7 -y
+       - run: 
+           name: Initialize conda
+           command: conda activate kedro-environment
+       - run: 
+           name: Install virtualenv dependancy for conda environment
+           command: conda install -y virtualenv
        - restore_cache:  # ensure this step occurs *before* installing dependencies
            key: v4-dependencies-{{ checksum "features/requirements.txt" }}
        - run:
@@ -28,6 +28,10 @@
           key: v4-dependencies-{{ checksum "features/requirements.txt" }}
           paths:
             - ".venv"
+       - run: source env/kedro-environment/bin/activate
+       - run: pip install pipenv
+       - run: mkdir kedro-environment && cd kedro-environment
+       - run: kedro test --type=unit -n 3
        - run: mkdir test-results
        - store_test_results:
            path: test-results
