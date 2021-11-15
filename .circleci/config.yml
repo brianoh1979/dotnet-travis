@@ -14,7 +14,7 @@
        - run: conda create --name kedro-environment python=3.7 -y
        - run: 
            name: Initialize conda
-           command: conda init bash && conda activate kedro-environment
+           command: conda init bash && activate kedro-environment
        - run: 
            name: Install virtualenv dependancy for conda environment
            command: conda install -y virtualenv
