@@ -29,7 +29,14 @@
 #       - run: source env/kedro-environment/bin/activate
        - run: pip install pipenv jmespath dynaconf cachetools toposort anyconfig kedro
        - run: mkdir kedro-environment && cd kedro-environment
-       - run: python -m pytest -m 'not integration ' -n 3 src/
+#       - run: python -m pytest -m 'not integration ' -n 3 src/
+       - run:
+           name: Run tests
+           command: |
+             set -e
+             TEST_FILES=$(circleci tests glob "src/tests/*.py" | circleci tests split --split-by=timings)
+             mkdir -p test-results
+             pytest --verbose --junitxml=test-results/junit.xml $TEST_FILES
        - run: mkdir test-results
        - store_test_results:
            path: test-results
