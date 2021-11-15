@@ -3,6 +3,7 @@
 
  jobs:
    build:
+     parallelism: 3
      docker: 
        - image: continuumio/anaconda3
      
@@ -37,7 +38,6 @@
              TEST_FILES=$(circleci tests glob "src/tests/*.py" | circleci tests split --split-by=timings)
              mkdir -p test-results
              pytest --verbose --junitxml=test-results/junit.xml $TEST_FILES
-       - run: mkdir test-results
        - store_test_results:
            path: test-results
 
