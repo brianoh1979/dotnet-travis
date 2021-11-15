@@ -1,9 +1,6 @@
 #Comment to trigger a fresh commit
  version: 2.1
 
- orbs:
-  win: circleci/windows@2.2.0
-
  jobs:
    build:
      docker: 
@@ -31,8 +28,8 @@
             - ".venv"
 #       - run: source env/kedro-environment/bin/activate
        - run: pip install pipenv jmespath dynaconf cachetools toposort anyconfig kedro
-       - run: mkdir kedro-environment && cd kedro-environment && kedro new --starter=spaceflights
-       - run: kedro test --type=unit -n 3
+       - run: mkdir kedro-environment && cd kedro-environment
+       - run: python -m pytest -m 'not integration ' -n 3 src/
        - run: mkdir test-results
        - store_test_results:
            path: test-results
