@@ -29,7 +29,7 @@
           key: v4-dependencies-{{ checksum "features/requirements.txt" }}
           paths:
             - ".venv"
-       - run: source env/kedro-environment/bin/activate
+#       - run: source env/kedro-environment/bin/activate
        - run: pip install pipenv
        - run: mkdir kedro-environment && cd kedro-environment
        - run: kedro test --type=unit -n 3
