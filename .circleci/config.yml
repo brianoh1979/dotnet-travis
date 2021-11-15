@@ -35,7 +35,7 @@
            name: Run tests
            command: |
              set -e
-             TEST_FILES=$(circleci tests glob "src/tests/*.py" | circleci tests split --split-by=timings)
+             TEST_FILES=$(circleci tests glob "src/tests/test_run*.py" | circleci tests split --split-by=timings)
              mkdir -p test-results
              pytest --verbose --junitxml=test-results/junit.xml $TEST_FILES
        - store_test_results:
