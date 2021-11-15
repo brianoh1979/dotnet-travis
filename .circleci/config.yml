@@ -20,7 +20,7 @@
            command: conda install -y virtualenv
        - restore_cache:  # ensure this step occurs *before* installing dependencies
            key: v4-dependencies-{{ checksum "features/requirements.txt" }}
-       - run: pip install --user cffi==1.10.0
+#       - run: pip install --user cffi==1.10.0
 #       - run:
 #           name: Install dependencies
 #           command: |
@@ -30,7 +30,7 @@
           paths:
             - ".venv"
        - run: source env/kedro-environment/bin/activate
-#       - run: pip install pipenv
+       - run: pip install pipenv
        - run: mkdir kedro-environment && cd kedro-environment
        - run: kedro test --type=unit -n 3
        - run: mkdir test-results
